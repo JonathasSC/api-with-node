@@ -2,21 +2,19 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const app = express();
-const router = express.Router();
 
-// Carregando as rotas:
-const put    = require('./routes/put')
-const index  = require('./routes/index');
-const del    = require('./routes/delete');
-const create = require('./routes/create')
+// Carregar rotas:
+const baseRoute = require('./routes/base-route')
+const interactiveRoutes = require('./routes/interactives-routes')
+
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false}));
+app.use(bodyParser.urlencoded({extended: false}));
 
 
-app.use('/', index)
-app.use('/', create);
-app.use('/', put);
-app.use('/', del);
+app.use('/', interactiveRoutes)
+app.use('/', baseRoute)
+app.use('/', interactiveRoutes)
+app.use('/', interactiveRoutes)
 
 module.exports = app;
