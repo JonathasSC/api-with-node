@@ -1,7 +1,17 @@
-exports.get = (req, res, next) => {
+exports.getAll = (req, res, next) => {
     res.status(200).send({
         title: 'Node API',
         version: '0.0.1',
+    });
+};
+
+// =======================================
+
+exports.get = (req, res, next) => {
+    const id = req.params.id;
+    res.status(201).send({
+        id: id,
+        item: req.body,  
     });
 };
 
