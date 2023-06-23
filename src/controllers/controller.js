@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const User = mongoose.model('user');
+const User = mongoose.model('users');
 
 exports.getAll = (req, res, next) => {
     res.status(200).send({
@@ -21,7 +21,6 @@ exports.get = (req, res, next) => {
 exports.post = (req, res, next) => {
     var user = new User();
 
-    user.id      = req.body.id;
     user.name    = req.body.name;
     user.surname = req.body.surname;
     user.email   = req.body.email;
