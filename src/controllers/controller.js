@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const User = mongoose.model('users');
+const repository = require('../repositories/users-repositories')
 const ValidationContract = require('../validators/fluent-validator')
 
 exports.getBase = (req, res, next) => {
@@ -12,7 +13,7 @@ exports.getBase = (req, res, next) => {
 // ============== GET ====================
 
 exports.get = (req, res, next) => {
-    User.find({}, 'id name surname email')
+    repository.get()
     .then(data => {
         res
         .status(200)
@@ -26,7 +27,7 @@ exports.get = (req, res, next) => {
 };
 
 exports.getById = (req, res, next) => {
-    User.findById(req.params.id, 'id name surname email')
+    repository.getById(req.params.id)
     .then(data => {
         res
         .status(200)
@@ -55,14 +56,7 @@ exports.post = (req, res, next) => {
         return;
     }
 
-    var user = new User();
-
-    user.name    = req.body.name;
-    user.surname = req.body.surname;
-    user.email   = req.body.email;
-
-    user
-        .save()
+    repository.create(req.body)
         .then(x => {
             res
             .status(201)
@@ -96,14 +90,7 @@ exports.put = (req, res, next) => {
         return;
     }
 
-    User.findByIdAndUpdate(req.params.id, {
-        $set: {
-            name:    req.body.name,
-            surname: req.body.surname,
-            email:   req.body.email
-        }
-    })
-
+    repository.update(req.params.id, req.body)
     .then(x => {
         res
         .status(200)
