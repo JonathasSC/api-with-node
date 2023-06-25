@@ -6,22 +6,23 @@ exports.get = async() => {
     return response
 }
 
-exports.getById = (id) => {
-    return User.findById(id, 'id name surname email');
+exports.getById = async(id) => {
+    const response = await User.findById(id, 'id name surname email');
+    return response
 }
 
-exports.create = (data) => {
+exports.create = async(data) => {
     var user = new User(data);
 
     user.name    = data.name;
     user.surname = data.surname;
     user.email   = data.email;
 
-    return user.save()
+    await user.save()
 }
 
-exports.update = (id, data) => {
-    return User.findByIdAndUpdate(id, {
+exports.update = async(id, data) => {
+    await User.findByIdAndUpdate(id, {
         $set: {
             name:    data.name,
             surname: data.surname,
@@ -30,6 +31,6 @@ exports.update = (id, data) => {
     })
 }
 
-exports.delete = (id) => {
-    return User.findByIdAndDelete(id)
+exports.delete = async(id) => {
+    await User.findByIdAndDelete(id)
 }
