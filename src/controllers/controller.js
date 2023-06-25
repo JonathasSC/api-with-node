@@ -12,18 +12,15 @@ exports.getBase = (req, res, next) => {
 
 // ============== GET ====================
 
-exports.get = (req, res, next) => {
-    repository.get()
-    .then(data => {
-        res
-        .status(200)
-        .send(data);
-    })
-    .catch(e => {
+exports.get = async(req, res, next) => {
+    try {
+        var data = await repository.get();
+        res.status(200).send(data)
+    } catch (e) {
         res
         .status(400)
-        .send(e);
-    });
+        .send({message: '400 Bad Request - Get elements'});
+    }
 };
 
 exports.getById = (req, res, next) => {
@@ -110,7 +107,7 @@ exports.put = (req, res, next) => {
 // ============== DELETE =================
 
 exports.delete = (req, res, next) => {
-    User.findByIdAndDelete(req.params.id)
+    repository.delete(req.params.id)
     .then(x => {
         res
         .status(200)

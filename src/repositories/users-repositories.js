@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
 const User = mongoose.model('users')
 
-exports.get = () => {
-    return User.find({}, 'id name surname email')
+exports.get = async() => {
+    const response = await User.find({}, 'id name surname email')
+    return response
 }
 
 exports.getById = (id) => {
@@ -27,4 +28,8 @@ exports.update = (id, data) => {
             email:   data.email
         }
     })
+}
+
+exports.delete = (id) => {
+    return User.findByIdAndDelete(id)
 }
